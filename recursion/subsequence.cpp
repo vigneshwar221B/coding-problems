@@ -1,27 +1,33 @@
 #include <iostream>
-#include<vector>
+#include <vector>
 
 using namespace std;
 
-void print_subs(int ind, vector<int> &ds, int arr[], int n){
-  if (ind == n){
-    for(auto it: ds){
-      cout<< it << " ";
+void subsequence(vector<int> arr, int index, vector<int> &output, int s, int sum)
+{
+  if (index == arr.size())
+  {
+    if (s == sum)
+    {
+      for (auto it : output)
+        cout << it << " ";
+      cout << "\n";
     }
-    cout<<"\n";
     return;
   }
 
-  ds.push_back(arr[ind]);
-  print_subs(ind+1, ds, arr, n);
-  ds.pop_back();
-  print_subs(ind+1, ds, arr, n);
+  output.push_back(arr[index]);
+  //s+=arr[index];
+  subsequence(arr, index + 1, output, s + arr[index], sum);
+  output.pop_back();
+  //s-=arr[index];
+  subsequence(arr, index + 1, output, s, sum);
 }
 
 int main()
 {
-  int arr[] = {3, 1, 2};
-  int n = 3;
-  vector<int> ds;
-  print_subs(0, ds, arr, n);
+  vector<int> arr{1, 2, 1};
+  vector<int> output;
+
+  subsequence(arr, 0, output, 0, 2);
 }
